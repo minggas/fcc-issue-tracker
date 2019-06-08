@@ -9,17 +9,17 @@
 	"dependencies": {
 		"body-parser": "^1.15.2",
 		"chai": "^3.5.0",
-		"chai-http": "^3.0.0",
+		"chai-http": "^4.3.0",
 		"cors": "^2.8.1",
 		"express": "^4.14.0",
 		"helmet": "^3.18.0",
-		"mocha": "^3.2.0",
+		"mocha": "^6.1.4",
 		"mongodb": "^2.2.16",
-		"mongoose": "^5.5.13",
-		"zombie": "^5.0.5"
+		"mongoose": "^5.5.14",
+		"zombie": "^6.1.4"
 	},
 	"engines": {
-		"node": "4.4.3"
+		"node": "8.10.3"
 	},
 	"repository": {
 		"type": "git",
