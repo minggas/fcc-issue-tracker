@@ -11,8 +11,10 @@
 var expect = require('chai').expect;
 var MongoClient = require('mongodb');
 var ObjectId = require('mongodb').ObjectID;
+var mongoose = require('mongoose');
+var Issue = require('../models/Issue').Issue;
 
-const CONNECTION_STRING = process.env.DB; //MongoClient.connect(CONNECTION_STRING, function(err, db) {});
+mongoose.connect(process.env.DB, {useNewUrlParser: true});
 
 module.exports = function (app) {
 
@@ -23,9 +25,17 @@ module.exports = function (app) {
       
     })
     
-    .post(function (req, res){
-      var project = req.params.project;
-      
+    .post(function (req, res){     
+      var project = req.params.project;      
+      var newIssue = new Issue(req.body);
+
+      newIssue.save().then(result => {
+        res.status(200);
+        res.json(result);
+      }).catch(err => {
+        res.status(500);
+        res.json(err);
+      })
     })
     
     .put(function (req, res){
