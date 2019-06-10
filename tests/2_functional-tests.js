@@ -14,7 +14,7 @@ var server = require('../server');
 chai.use(chaiHttp);
 
 suite('Functional Tests', function() {
-  
+
     suite('POST /api/issues/{project} => object with issue data', function() {
       
       test('Every field filled in', function(done) {
@@ -68,7 +68,20 @@ suite('Functional Tests', function() {
       });
       
       test('Missing required fields', function(done) {
-        
+        chai
+          .request(server)
+          .post('/api/issues/test')
+          .send({
+            issue_title: 'Missing required fields',
+            issue_text: '',
+            created_by: 'Functional Test - Required fields filled in'
+          })
+          .end(function(err, res) {
+            testId = res.body._id;
+            assert.equal(res.status, 500);
+            
+            done();
+          });
       });
       
     });
