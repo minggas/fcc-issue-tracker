@@ -65,7 +65,7 @@ const IssueSchema = new mongoose.Schema({
     }
 });
 
-IssueSchema.method('update', function(updates, done) {
-    Object.assign(this, updates, {updated_on: new Date});
-    this.parent().save(done);
-  })
+const Issue = mongoose.model("Issue", IssueSchema);
+
+
+exports.Issue = Issue;
