@@ -33,10 +33,7 @@ suite('Functional Tests', function() {
             assert.equal(res.status, 200);
             assert.equal(res.body.issue_title, 'Every Field Fill');
             assert.equal(res.body.issue_text, 'Some text to pass all fields');
-            assert.equal(
-              res.body.created_by,
-              'Functional Test - Every field filled in'
-            );
+            assert.equal(res.body.created_by, 'Functional Test - Every field filled in');
             assert.equal(res.body.assigned_to, 'Chai and Mocha');
             assert.equal(res.body.status_text, 'In QA');
             done();
@@ -57,10 +54,7 @@ suite('Functional Tests', function() {
             assert.equal(res.status, 200);
             assert.equal(res.body.issue_title, 'Required fields filled in');
             assert.equal(res.body.issue_text, 'Some text to pass required fields');
-            assert.equal(
-              res.body.created_by,
-              'Functional Test - Required fields filled in'
-            );
+            assert.equal(res.body.created_by, 'Functional Test - Required fields filled in');
             assert.equal(res.body.assigned_to, '');
             assert.equal(res.body.status_text, '');
             done();
