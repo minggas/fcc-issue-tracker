@@ -18,22 +18,29 @@ suite('Functional Tests', function() {
     suite('POST /api/issues/{project} => object with issue data', function() {
       
       test('Every field filled in', function(done) {
-       chai.request(server)
-        .post('/api/issues/test')
-        .send({
-          issue_title: 'Title',
-          issue_text: 'text',
-          created_by: 'Functional Test - Every field filled in',
-          assigned_to: 'Chai and Mocha',
-          status_text: 'In QA'
-        })
-        .end(function(err, res){
-          assert.equal(res.status, 200);
-          
-          //fill me in too!
-          
-          done();
-        });
+        chai
+          .request(server)
+          .post('/api/issues/test')
+          .send({
+            issue_title: 'Every Field Fill',
+            issue_text: 'Some text to pass all fields',
+            created_by: 'Functional Test - Every field filled in',
+            assigned_to: 'Chai and Mocha',
+            status_text: 'In QA'
+          })
+          .end(function(err, res) {
+            testId = res.body._id;
+            assert.equal(res.status, 200);
+            assert.equal(res.body.issue_title, 'Every Field Fill');
+            assert.equal(res.body.issue_text, 'Some text to pass all fields');
+            assert.equal(
+              res.body.created_by,
+              'Functional Test - Every field filled in'
+            );
+            assert.equal(res.body.assigned_to, 'Chai and Mocha');
+            assert.equal(res.body.status_text, 'In QA');
+            done();
+          });
       });
       
       test('Required fields filled in', function(done) {
