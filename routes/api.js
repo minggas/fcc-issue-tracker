@@ -28,6 +28,7 @@ module.exports = function (app) {
     .post(function (req, res){     
       var project = req.params.project;      
       var newIssue = new Issue(req.body);
+      newIssue.project = project;
 
       newIssue.save().then(result => {
         res.status(200);

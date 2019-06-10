@@ -48,6 +48,7 @@ suite('Functional Tests', function() {
           .request(server)
           .post('/api/issues/test')
           .send({
+            project: 'test',
             issue_title: 'Every Field Fill',
             issue_text: 'Some text to pass all fields',
             created_by: 'Functional Test - Every field filled in',
@@ -57,6 +58,7 @@ suite('Functional Tests', function() {
           .end(function(err, res) {
             testId = res.body._id;
             assert.equal(res.status, 200);
+            assert.equal(res.body.project, 'test');
             assert.equal(res.body.issue_title, 'Every Field Fill');
             assert.equal(res.body.issue_text, 'Some text to pass all fields');
             assert.equal(res.body.created_by, 'Functional Test - Every field filled in');

@@ -3,6 +3,8 @@
 
 ------------------
 
+project: string [required]
+
 issue_title: string [required]
 
 issue_text: string [required]
@@ -24,11 +26,17 @@ open: boolean
 const mongoose = require("mongoose");
 
 const IssueSchema = new mongoose.Schema({
+    project: {
+        type: String,
+        required: true,
+        trim: true,
+        minlength: 3,
+    },
     issue_title: {
         type: String,
         required: true,
         trim: true,
-        minlength: 1,
+        minlength: 3,
         unique: true
     },
     issue_text: {
@@ -45,11 +53,13 @@ const IssueSchema = new mongoose.Schema({
     },
     assigned_to: {
         type: String,
-        default: ""
+        default: "",
+        trim: true
     },
     status_text: {
         type: String,
-        default: ""
+        default: "",
+        trim: true
     },
     created_on: {
         type: Date, 
@@ -65,7 +75,4 @@ const IssueSchema = new mongoose.Schema({
     }
 });
 
-const Issue = mongoose.model("Issue", IssueSchema);
-
-
-exports.Issue = Issue;
+exports.Issue = mongoose.model("Issue", IssueSchema);
