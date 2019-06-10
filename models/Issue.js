@@ -24,6 +24,12 @@ open: boolean
 const mongoose = require("mongoose");
 
 const IssueSchema = new mongoose.Schema({
+    project: {
+        type: String,
+        required: true,
+        trim: true,
+        minlength: 3,
+    },
     issue_title: {
         type: String,
         required: true,
