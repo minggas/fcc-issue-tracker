@@ -11,6 +11,32 @@ var chai = require('chai');
 var assert = chai.assert;
 var server = require('../server');
 
+var mongoose = require('mongoose');
+
+before(function (done) {
+
+  function clearCollections() {
+    for (var collection in mongoose.connection.collections) {
+      mongoose.connection.collections[collection].remove(function() {});
+    }
+    return done();
+  }
+
+  if (mongoose.connection.readyState === 0) {
+    mongoose.connect(config.test.db, function (err) {
+      if (err) throw err;
+      return clearCollections();
+    });
+  } else {
+    return clearCollections();
+  }
+});
+
+after(function (done) {
+  mongoose.disconnect();
+  return done();
+});
+
 chai.use(chaiHttp);
 
 suite('Functional Tests', function() {
