@@ -44,7 +44,27 @@ suite('Functional Tests', function() {
       });
       
       test('Required fields filled in', function(done) {
-        
+        chai
+          .request(server)
+          .post('/api/issues/test')
+          .send({
+            issue_title: 'Required fields filled in',
+            issue_text: 'Some text to pass required fields',
+            created_by: 'Functional Test - Required fields filled in'
+          })
+          .end(function(err, res) {
+            testId = res.body._id;
+            assert.equal(res.status, 200);
+            assert.equal(res.body.issue_title, 'Required fields filled in');
+            assert.equal(res.body.issue_text, 'Some text to pass required fields');
+            assert.equal(
+              res.body.created_by,
+              'Functional Test - Required fields filled in'
+            );
+            assert.equal(res.body.assigned_to, '');
+            assert.equal(res.body.status_text, '');
+            done();
+          });
       });
       
       test('Missing required fields', function(done) {
