@@ -17,7 +17,7 @@ before(function (done) {
 
   function clearCollections() {
     for (var collection in mongoose.connection.collections) {
-      mongoose.connection.collections[collection].remove(function() {});
+      mongoose.connection.collections[collection].deleteMany(function() {});
     }
     return done();
   }
