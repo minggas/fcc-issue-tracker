@@ -143,7 +143,20 @@ suite('Functional Tests', function() {
       });
       
       test('Multiple fields to update', function(done) {
-        
+        chai
+          .request(server)
+          .put('/api/issues/test')
+          .send({
+            _id: putId,
+            issue_title: 'PUT Multi fields',
+            open: false,
+            issue_text: 'This shit is closed!!!'
+          })
+          .end(function(err, res) {
+            assert.equal(res.status, 200);
+            assert.equal(res.text, 'successfully updated');
+            done();
+          })
       });
       
     });
