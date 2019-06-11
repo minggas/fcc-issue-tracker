@@ -39,6 +39,8 @@ after(function (done) {
 
 chai.use(chaiHttp);
 
+let putId = '';
+
 suite('Functional Tests', function() {
 
     suite('POST /api/issues/{project} => object with issue data', function() {
@@ -79,6 +81,7 @@ suite('Functional Tests', function() {
           })
           .end(function(err, res) {
             testId = res.body._id;
+            putId = testId;
             assert.equal(res.status, 200);
             assert.equal(res.body.issue_title, 'Required fields filled in');
             assert.equal(res.body.issue_text, 'Some text to pass required fields');
