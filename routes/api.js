@@ -31,11 +31,9 @@ module.exports = function (app) {
       newIssue.project = project;
 
       newIssue.save().then(result => {
-        res.status(200);
-        res.json(result);
+        res.status(200).json(result);
       }).catch(err => {
-        res.status(500);
-        res.json(err);
+        res.status(503).json(err);
       })
     })
     
@@ -57,7 +55,7 @@ module.exports = function (app) {
           updateIssue.project = req.params.project;        
           Issue.findByIdAndUpdate(req.body._id, {$set: updateIssue}, {useFindAndModify: false}, (err, issue) => {
             if(err) {
-              res.status(503).send('could not update ' + req.body._id);
+              res.status(500).send('could not update ' + req.body._id);
             }else{
               res.status(200).send('successfully updated');
             }
