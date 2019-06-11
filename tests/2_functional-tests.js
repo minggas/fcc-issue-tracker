@@ -128,7 +128,18 @@ suite('Functional Tests', function() {
       });
       
       test('One field to update', function(done) {
-        
+        chai
+          .request(server)
+          .put('/api/issues/test')
+          .send({
+            _id: putId,
+            issue_title: 'PUT one field'
+          })
+          .end(function(err, res) {
+            assert.equal(res.status, 200);
+            assert.equal(res.text, 'successfully updated');
+            done();
+          })
       });
       
       test('Multiple fields to update', function(done) {
