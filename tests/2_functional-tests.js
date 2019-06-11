@@ -208,7 +208,15 @@ suite('Functional Tests', function() {
       });
       
       test('Valid _id', function(done) {
-        
+        chai
+          .request(server)
+          .delete('/api/issues/test')
+          .send({_id: putId})
+          .end(function(err, res) {
+            assert.equal(res.status, 200);
+            assert.equal(res.text, 'deleted ' + putId);
+            done();
+          })
       });
       
     });
