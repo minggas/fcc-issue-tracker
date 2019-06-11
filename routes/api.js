@@ -40,8 +40,30 @@ module.exports = function (app) {
     })
     
     .put(function (req, res){
-      var project = req.params.project;
-      
+      if (!req.body._id) {
+        res.status(400).send('missing issue id field');
+      }else{
+        const updateIssue = {}
+        if(!req.body.issue_title && !req.body.issue_text && !req.body.created_by && !req.body.assigned_to && !req.body.status_text && !req.body.hasOwnProperty('open')) {
+          res.status(400).send('no updated field sent');
+        } else {
+          if (req.body.issue_title) updateIssue.issue_title = req.body.issue_title;
+          if (req.body.issue_text) updateIssue.issue_text = req.body.issue_text;
+          if (req.body.created_by) updateIssue.created_by = req.body.created_by;
+          if (req.body.assigned_to) updateIssue.assigned_to = req.body.assigned_to;
+          if (req.body.status_text) updateIssue.status_text = req.body.status_text;
+          if (req.body.open !== null) updateIssue.open = !req.body.open; // open===true in form means checkbox is ticked -> close issue
+          updateIssue.updated_on = new Date();
+          updateIssue.project = req.params.project;        
+          Issue.findByIdAndUpdate(req.body._id, {$set: updateIssue}, {useFindAndModify: false}, (err, issue) => {
+            if(err) {
+              res.status(503).send('could not update ' + req.body._id);
+            }else{
+              res.status(200).send('successfully updated');
+            }
+          })
+        }  
+      }      
     })
     
     .delete(function (req, res){
