@@ -60,6 +60,16 @@ suite('Functional Tests', function() {
           .end(function(err, res) {
             testId = res.body._id;
             assert.equal(res.status, 200);
+            assert.isObject(res.body);
+            assert.property(res.body, 'issue_title');
+            assert.property(res.body, 'issue_text');
+            assert.property(res.body, 'created_on');
+            assert.property(res.body, 'updated_on');
+            assert.property(res.body, 'created_by');
+            assert.property(res.body, 'assigned_to');
+            assert.property(res.body, 'open');
+            assert.property(res.body, 'status_text');
+            assert.property(res.body, '_id');
             assert.equal(res.body.project, 'test');
             assert.equal(res.body.issue_title, 'Every Field Fill');
             assert.equal(res.body.issue_text, 'Some text to pass all fields');
@@ -83,6 +93,16 @@ suite('Functional Tests', function() {
             testId = res.body._id;
             putId = testId;
             assert.equal(res.status, 200);
+            assert.isObject(res.body);
+            assert.property(res.body, 'issue_title');
+            assert.property(res.body, 'issue_text');
+            assert.property(res.body, 'created_on');
+            assert.property(res.body, 'updated_on');
+            assert.property(res.body, 'created_by');
+            assert.property(res.body, 'assigned_to');
+            assert.property(res.body, 'open');
+            assert.property(res.body, 'status_text');
+            assert.property(res.body, '_id');
             assert.equal(res.body.issue_title, 'Required fields filled in');
             assert.equal(res.body.issue_text, 'Some text to pass required fields');
             assert.equal(res.body.created_by, 'Functional Test - Required fields filled in');
@@ -103,6 +123,7 @@ suite('Functional Tests', function() {
           })
           .end(function(err, res) {
             testId = res.body._id;
+            assert.isString(res.text)
             assert.equal(res.status, 500);
             
             done();
@@ -122,6 +143,7 @@ suite('Functional Tests', function() {
           })
           .end(function(err, res) {
             assert.equal(res.status, 400);
+            assert.isString(res.text)
             assert.equal(res.text, 'no updated field sent');
             done();
           })
@@ -149,7 +171,7 @@ suite('Functional Tests', function() {
           .send({
             _id: putId,
             issue_title: 'PUT Multi fields',
-            open: false,
+            open: true,
             issue_text: 'This shit is closed!!!'
           })
           .end(function(err, res) {
