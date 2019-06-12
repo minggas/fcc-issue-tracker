@@ -37,7 +37,7 @@ module.exports = function (app) {
       newIssue.save().then(result => {
         res.status(200).json(result);
       }).catch(err => {
-        res.status(503).json(err);
+        res.status(500).json(err);
       })
     })
     
