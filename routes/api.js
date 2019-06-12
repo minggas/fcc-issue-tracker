@@ -37,7 +37,7 @@ module.exports = function (app) {
       newIssue.save().then(result => {
         res.status(200).json(result);
       }).catch(err => {
-        res.status(503).json(err);
+        res.status(500).json(err);
       })
     })
     
@@ -54,7 +54,7 @@ module.exports = function (app) {
           if (req.body.created_by) updateIssue.created_by = req.body.created_by;
           if (req.body.assigned_to) updateIssue.assigned_to = req.body.assigned_to;
           if (req.body.status_text) updateIssue.status_text = req.body.status_text;
-          if (req.body.open !== null) updateIssue.open = !req.body.open; // open===true in form means checkbox is ticked -> close issue
+          if (req.body.hasOwnProperty('open')) updateIssue.open = !req.body.open;
           updateIssue.updated_on = new Date();
           updateIssue.project = req.params.project;        
           Issue.findByIdAndUpdate(req.body._id, {$set: updateIssue}, {useFindAndModify: false}, (err, issue) => {
