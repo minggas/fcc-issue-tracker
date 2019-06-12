@@ -149,7 +149,7 @@ suite('Functional Tests', function() {
           .send({
             _id: putId,
             issue_title: 'PUT Multi fields',
-            open: false,
+            open: true,
             issue_text: 'This shit is closed!!!'
           })
           .end(function(err, res) {
